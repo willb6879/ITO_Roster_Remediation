@@ -1,4 +1,6 @@
 import pandas as pd
+import secrets
+import string
 import sys
 import os
 
@@ -85,9 +87,36 @@ def get_num_args():
 def check_sheet_headers(dataframe):
     return
 
+def gen_rand_password(length=12):
+    """
+    Generate a random password with Active Directory complexity requirements.
 
-def gen_rand_password():
-    return
+    Parameters:
+    - length (int): The length of the password.
+
+    Returns:
+    str: A random password.
+    """
+    uppercase_letters = string.ascii_uppercase
+    lowercase_letters = string.ascii_lowercase
+    digits = string.digits
+    special_characters = string.punctuation
+
+    # Ensure at least one character from each category
+    password = (
+        secrets.choice(uppercase_letters) +
+        secrets.choice(lowercase_letters) +
+        secrets.choice(digits) +
+        secrets.choice(special_characters)
+    )
+
+    # Fill the rest of the password with random characters
+    password += ''.join(secrets.choice(uppercase_letters + lowercase_letters + digits + special_characters) for _ in range(length - 4))
+
+    # Shuffle the password to ensure randomness
+    password_list = list(password)
+    secrets.SystemRandom().shuffle(password_list)
+    return ''.join(password_list)
 
 # Formats csv to desired output    
 def formatCSV(csv_file, removed_columns):
@@ -129,7 +158,7 @@ def formatCSV(csv_file, removed_columns):
     username_col = df.pop('Lastname')
     df.insert(4, 'Lastname', username_col)
 
-    df['TempPassword'] = None
+    # df['TempPassword'] = None
 
     # Remove remaining unecessary columns
     df = df.drop(columns=removed_columns)
@@ -172,6 +201,13 @@ def gen_user_csv_files(excel_file, old_sheet_roster, new_sheet_roster):
 
     # Determine users that have joined the enterprise
     new_users = new_df[~new_df['Email'].isin(old_df['Email'])]
+
+    # Add TempPassword column to new_users dataframe
+    new_users = new_users.assign(TempPassword=None)
+
+    # Add temporary passwords to each respective new user in the dataframe
+    for index, row in new_users.iterrows():
+        new_users.loc[index, 'TempPassword'] = gen_rand_password()
 
     # Save results to csv files
     new_users.to_csv(CSV_USERS_NEW, index=False, header=True)
