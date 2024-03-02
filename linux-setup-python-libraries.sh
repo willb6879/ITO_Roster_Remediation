@@ -22,7 +22,7 @@ check_status "'apt install pip'"
 
 echo -e "$RESET\n--- Installing pandas using pip ---"
 pip install pandas
-check_status "'apt install pandas'"
+check_status "'pip install pandas'"
 
 echo -e "$RESET\n--- Installing openpyxl using pip ---"
 pip install openpyxl 

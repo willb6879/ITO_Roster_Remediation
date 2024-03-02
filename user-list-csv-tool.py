@@ -5,8 +5,8 @@ import sys
 import os
 
 RED_TEXT = "\033[91m"
-CSV_USERS_NEW = "x_users_new.csv"
-CSV_USERS_RETIRED = "x_users_retired.csv"
+CSV_USERS_NEW = "users_new.csv"
+CSV_USERS_RETIRED = "users_retired.csv"
 ERR_INVALID_ARGS = 1
 ERR_FILE_NOT_EXIST = 2
 ERR_INVALID_HDR = 3
@@ -193,8 +193,16 @@ def gen_user_csv_files(excel_file, old_sheet_roster, new_sheet_roster):
 
     """
     # Read in excel sheets
-    old_df = pd.read_excel(excel_file, sheet_name=old_sheet_roster)
-    new_df = pd.read_excel(excel_file, sheet_name=new_sheet_roster)
+    try:
+        old_df = pd.read_excel(excel_file, sheet_name=old_sheet_roster)
+    except ValueError as e:
+        print(f"{RED_TEXT}Error: Worksheet '{old_sheet_roster}' not found in '{excel_file}'")
+        sys.exit(1)   
+    try:
+        new_df = pd.read_excel(excel_file, sheet_name=new_sheet_roster)
+    except ValueError as e:
+        print(f"{RED_TEXT}Error: Worksheet '{new_sheet_roster}' not found in '{excel_file}'")
+        sys.exit(1)
 
     # Determine users that have left the enterprise
     retired_users = old_df[~old_df['Email'].isin(new_df['Email'])]
