@@ -11,12 +11,18 @@ python3 user-list-csv-tool.py <.xlsx file> <old sheet roster name> <new sheet ro
 
 ## Prerequisites for Using `user-list-csv-tool.py`
 
-Before using the `user-list-csv-tool.py` script, make sure to install its dependencies using the provided setup script.
+Before using the `user-list-csv-tool.py` script, install the required dependencies using the provided setup script.
 
-Run the following command to install the required Python libraries:
-
+For Linux-based systems, use the following script to install the required Python libraries:
+(uses `apt` package manager)
 ```bash
-./setup-python-libraries.sh
+./linux-setup-python-libraries.sh
+```
+
+For Windows systems, use the following script to install the required Python libraries (RUN AS ADMINISTRATOR)
+(uses `choco` package manager)
+```bash
+./windows-setup-python-libraries.sh
 ```
 
 ## Dependencies Installed by setup-python-libraries.sh
