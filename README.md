@@ -38,7 +38,7 @@ The Python script is designed to <u>process Excel files and generate two separat
 
 
 ### Why use Python?
-The reason we are using python is for its **readablility** and **ease of use**. When dealing with excel (.xlsx), it can become extremely cumbersome dealing with sheet reading and parsing. Python simplifies this with libraries, specifically the `pandas` library. Furthermore, whenever we are automating a task, it is critical that the code is readable so that others understand what the script is doing.
+The reason we are using python is for its **readablility** and **ease of use**. When dealing with excel (.xlsx), it can become extremely cumbersome handling excel sheet reading and parsing. Python simplifies this with libraries, specifically the `pandas` library. Furthermore, whenever we are automating a task, it is critical that the code is readable so that others understand what the script is doing. Python accomplishes all of this.
 
 ### Usage/Input
 ```bash

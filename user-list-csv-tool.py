@@ -83,9 +83,44 @@ def get_num_args():
     num_args = len(sys.argv) - 1
     return num_args
 
-# Checks the headers in an excel sheet
+# Sanity checks the headers in an excel sheet
+# Returns 0 on success, -1 on failure
 def check_sheet_headers(dataframe):
-    return
+    """
+    Sanity checks the headers in an Excel sheet against expected headers.
+
+    Parameters:
+    - dataframe (pandas.DataFrame): The pandas DataFrame representing the Excel sheet.
+
+    Returns:
+    - int: Returns 0 on success, indicating that the Excel sheet headers match the expected headers.
+            Returns -1 on failure, indicating a mismatch or unexpected error.
+
+    Description:
+    - This function performs a sanity check on the headers of an Excel sheet represented by a pandas DataFrame.
+    - It compares the actual headers in the DataFrame with a predefined list of expected headers.
+    - If the headers match, the function returns 0. If there is a mismatch or an unexpected error occurs, it returns -1.
+    """
+    # Gets headers from the dataframe
+    expected_headers = ["Course", "Name", "Class", "Major", "Email", "Group"]
+    df_headers = list(dataframe.columns)
+
+    # Performs sanity check for excel sheet header
+    try:
+        for i in range(0, len(df_headers)):
+            if expected_headers[i] != df_headers[i]:
+                # Non-matching header
+                return -1
+    except IndexError as e:
+        # Index out of bounds - doesn't match headers
+        return -1
+    except Exception as e:
+        print(f"{RED_TEXT}Unexpected error has occurred\n {e}")
+        sys.exit(1)
+    
+    # Input excel sheet headers are compliant
+    return 0
+
 
 def gen_rand_password(length=12):
     """
@@ -158,8 +193,6 @@ def formatCSV(csv_file, removed_columns):
     username_col = df.pop('Lastname')
     df.insert(4, 'Lastname', username_col)
 
-    # df['TempPassword'] = None
-
     # Remove remaining unecessary columns
     df = df.drop(columns=removed_columns)
     df.to_csv(csv_file, index=False)
@@ -198,10 +231,24 @@ def gen_user_csv_files(excel_file, old_sheet_roster, new_sheet_roster):
     except ValueError as e:
         print(f"{RED_TEXT}Error: Worksheet '{old_sheet_roster}' not found in '{excel_file}'")
         sys.exit(1)   
+    except Exception as e:
+        print(f"{RED_TEXT}Unexpected error has occurred\n {e}")
+        sys.exit(1)
     try:
         new_df = pd.read_excel(excel_file, sheet_name=new_sheet_roster)
     except ValueError as e:
         print(f"{RED_TEXT}Error: Worksheet '{new_sheet_roster}' not found in '{excel_file}'")
+        sys.exit(1)
+    except Exception as e:
+        print(f"{RED_TEXT}Unexpected error has occurred\n {e}")
+        sys.exit(1)
+
+    # Check each sheet headers
+    if (check_sheet_headers(old_df) == -1):
+        print_err(3, old_sheet_roster)
+        sys.exit(1)
+    if (check_sheet_headers(new_df) == -1):
+        print_err(3, new_sheet_roster)
         sys.exit(1)
 
     # Determine users that have left the enterprise
