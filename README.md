@@ -11,7 +11,7 @@ For <u>Linux</u>, use the following script to install the required Python librar
 
 For <u>Windows</u>, use the following script to install the required Python libraries (RUN AS ADMINISTRATOR)
 
-This script uses `choco` package manager - https://www.youtube.com/watch?v=-5WLKu_J_AE (link to install `choco`)
+This script uses `choco` package manager - (link to install `choco` - https://www.youtube.com/watch?v=-5WLKu_J_AE)
 ```bash
 ./windows-setup-python-libraries.sh
 ```
