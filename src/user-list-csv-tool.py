@@ -39,7 +39,7 @@ def print_err(ERROR_CODE, f):
         return
     if ERROR_CODE == ERR_FILE_NOT_EXIST:
         print(f"{RED_TEXT}Error: '{f}' does not exist in the current working directory")
-        returnip
+        return
 
 
 def file_exists(file):
@@ -297,9 +297,6 @@ if __name__ == "__main__":
     gen_user_csv_files(sys.argv[1], sys.argv[2], sys.argv[3])
 
     # Call powershell script as a sub-process
-    # cmd_ps = f"./{PS_SCRIPT} {CSV_USERS_NEW}"
-    # print(cmd_ps)
-    # process = sp.Popen(cmd_ps, stdout=sp.PIPE, stderr=sp.PIPE)
-    # stdout, stderr = process.communicate()
+    
 
     

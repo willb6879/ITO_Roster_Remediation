@@ -15,14 +15,11 @@ check_status(){
 }
 
 # Install necessary libraries for 'user-list-csv-tool.py'
-echo -e "$RESET\n--- Installing python3 and pip (Python package installer) using choco ---"
-choco install python3
-check_status "'choco install python3'"
+echo -e "$RESET\n--- Installing python3 and pip (Python package installer) using apt ---"
+sudo apt update
+sudo apt install python3 -y
+check_status "'apt install python3'"
 
 echo -e "$RESET\n--- Installing pandas using pip ---"
 pip install pandas
 check_status "'pip install pandas'"
-
-echo -e "$RESET\n--- Installing openpyxl using pip ---"
-pip install openpyxl 
-check_status "'pip install openpyxl'"
