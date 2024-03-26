@@ -15,10 +15,10 @@ check_status(){
 }
 
 # Install necessary libraries for 'user-list-csv-tool.py'
-echo -e "$RESET\n--- Installing pip (Python package installer) using apt ---"
+echo -e "$RESET\n--- Installing python3 and pip (Python package installer) using apt ---"
 sudo apt update
-sudo apt install pip -y
-check_status "'apt install pip'"
+sudo apt install python3 -y
+check_status "'apt install python3'"
 
 echo -e "$RESET\n--- Installing pandas using pip ---"
 pip install pandas

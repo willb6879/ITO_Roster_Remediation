@@ -3,10 +3,12 @@ import secrets
 import string
 import sys
 import os
+import subprocess as sp
 
 RED_TEXT = "\033[91m"
 CSV_USERS_NEW = "users_new.csv"
 CSV_USERS_RETIRED = "users_retired.csv"
+PS_SCRIPT = "gen-ad-users.ps1"
 ERR_INVALID_ARGS = 1
 ERR_FILE_NOT_EXIST = 2
 ERR_INVALID_HDR = 3
@@ -37,7 +39,7 @@ def print_err(ERROR_CODE, f):
         return
     if ERROR_CODE == ERR_FILE_NOT_EXIST:
         print(f"{RED_TEXT}Error: '{f}' does not exist in the current working directory")
-        return
+        returnip
 
 
 def file_exists(file):
@@ -285,7 +287,19 @@ if __name__ == "__main__":
         print_err(ERR_FILE_NOT_EXIST, sys.argv[1])
         sys.exit(1)
 
+    # Check PS Script in working directory
+    file_path_ps = os.path.join(os.getcwd(), PS_SCRIPT)
+    if not os.path.isfile(file_path_ps):
+        print_err(ERR_FILE_NOT_EXIST, PS_SCRIPT)
+        sys.exit(1)
+
     # Generate csv files
     gen_user_csv_files(sys.argv[1], sys.argv[2], sys.argv[3])
+
+    # Call powershell script as a sub-process
+    # cmd_ps = f"./{PS_SCRIPT} {CSV_USERS_NEW}"
+    # print(cmd_ps)
+    # process = sp.Popen(cmd_ps, stdout=sp.PIPE, stderr=sp.PIPE)
+    # stdout, stderr = process.communicate()
 
     

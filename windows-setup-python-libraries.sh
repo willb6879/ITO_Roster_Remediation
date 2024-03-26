@@ -15,9 +15,9 @@ check_status(){
 }
 
 # Install necessary libraries for 'user-list-csv-tool.py'
-echo -e "$RESET\n--- Installing pip (Python package installer) using choco ---"
-choco install pip
-check_status "'choco install pip'"
+echo -e "$RESET\n--- Installing python3 and pip (Python package installer) using choco ---"
+choco install python3
+check_status "'choco install python3'"
 
 echo -e "$RESET\n--- Installing pandas using pip ---"
 pip install pandas

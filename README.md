@@ -19,9 +19,11 @@ This script uses `choco` package manager - (link to install `choco` - https://ww
 ## Dependencies Installed by setup script(s)
 The setup script(s), ```windwows-setup-python-libraries.sh / linux-setup-python-libraries.sh```, will install the following dependencies:
 
-    pip (Python library installer)
+    python3 and pip (Python library installer)
     pandas (data manipulation library for Python)
     openpyxl (library for reading and writing Excel files)
+
+Note: ```pip``` is included by default in Python version 3.4 or later
 
 ## Terminology Importance (READ PLEASE!!!)
 It is imperative that you understand the difference between a `.xlsx file`, and an  `excel sheet`
@@ -41,8 +43,13 @@ The Python script is designed to <u>process Excel files and generate two separat
 The reason we are using python is for its **readablility** and **ease of use**. When dealing with excel (.xlsx), it can become extremely cumbersome handling excel sheet reading and parsing. Python simplifies this with libraries, specifically the `pandas` library. Furthermore, whenever we are automating a task, it is critical that the code is readable so that others understand what the script is doing. Python accomplishes all of this.
 
 ### Usage/Input
+Linux
 ```bash
 python3 user-list-csv-tool.py <.xlsx file> <old sheet roster name> <new sheet roster name>
+```
+Windows
+```bash
+py user-list-csv-tool.py <.xlsx file> <old sheet roster name> <new sheet roster name>
 ```
 
 `<.xlsx file>` the file that holds the SHEETS of the rosters being compared
