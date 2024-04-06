@@ -297,6 +297,7 @@ if __name__ == "__main__":
     gen_user_csv_files(sys.argv[1], sys.argv[2], sys.argv[3])
 
     # Call powershell script as a sub-process
-    
-
-    
+    try:
+        result = sp.check_output(["gen-ad-users.exe", "users_new.csv"])
+    except sp.CalledProcessError as e:
+        print(f"AD Script failed with return code {e.returncode}")
