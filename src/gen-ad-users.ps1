@@ -44,7 +44,8 @@ foreach ($User in $Users) {
         $assignedSecurityGroup = $User.Group
         $UPN = $User.Username + $domain
         $Password = (ConvertTo-SecureString $User.TempPassword -AsPlainText -Force)
-        New-ADUser -Name "$Displayname" -DisplayName "$Displayname" -SamAccountName "$SAM" -UserPrincipalName "$UPN" -GivenName "$Firstname" -Surname "$Lastname" -AccountPassword $Password  -Enabled $true -Path "$DN" -ChangePasswordAtLogon $true -PasswordNeverExpires $false
+        $EmailAddress = $User.Username + "@" + "mtu.edu"
+        New-ADUser -Name "$Displayname" -DisplayName "$Displayname" -SamAccountName "$SAM" -UserPrincipalName "$UPN" -GivenName "$Firstname" -Surname "$Lastname" -EmailAddress "$EmailAddress" -AccountPassword $Password  -Enabled $true -Path "$DN" -ChangePasswordAtLogon $true -PasswordNeverExpires $false
         Add-ADGroupMember -Identity $assignedSecurityGroup -Members $SAM
         Write-Host "Created user: $UPN" -ForegroundColor Green
     }
